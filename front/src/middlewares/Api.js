@@ -9,21 +9,28 @@ const tableFilterParams = {
         direction: 'ASC'
     },
     pagination: {
-        page: 0,
-        itemsOnPage: 0
+        page: 1,
+        itemsOnPage: 10
     }
 }
 
 
 function setFilter(params) {
     tableFilterParams.filter = params;
-    sendQuery(tableFilterParams);
+    return sendQuery(tableFilterParams);
 }
 
 function sendQuery(params) {
-    // Шлем запрос
-    console.log(tableFilterParams);
-
+    return fetch("http://localhost:5000/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(params)
+    })
+    .then(res => {
+        return res.json()
+    })
 }
 
 export {setFilter, tableFilterParams};

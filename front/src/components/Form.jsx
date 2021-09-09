@@ -9,11 +9,9 @@ const Form = function (props) {
     function formSubmit(event) {
         event.preventDefault();
         props.setFilter({
-            filter: {
                 columnName: columnName,
                 operator: operator,
                 filterValue: filterValue
-            }
         })
     }
 
