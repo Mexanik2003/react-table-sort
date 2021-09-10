@@ -9,35 +9,6 @@ const Table = function (props) {
     }
 
     return (
-        /*<table>
-            <thead>
-                <tr>
-                    <th>
-                        <a href="#" onClick={setSort} data-name="date">Дата</a>
-                    </th>
-                    <th>
-                        <a href="#" onClick={setSort} data-name="name">Название</a>
-                    </th>
-                    <th>
-                        <a href="#" onClick={setSort} data-name="quantity">Количество</a>
-                    </th>
-                    <th>
-                        <a href="#" onClick={setSort} data-name="distance">Расстояние</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                { props.data && props.data.map(item =>(
-                <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.name}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.distance}</td>
-                </tr>
-            ))}
-            </tbody>
-        </table>*/
-
         <table className="table table-bordered">
             <thead>
                 <tr>
@@ -50,7 +21,7 @@ const Table = function (props) {
                 {props.data && props.data.map(item =>(
                     < Rows 
                         key={item.id}
-                        data={item.date} 
+                        date={item.date} 
                         name={item.name} 
                         quantity={item.quantity}
                         distance={item.distance}

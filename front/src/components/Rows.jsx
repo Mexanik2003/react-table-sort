@@ -1,8 +1,8 @@
-function Rows({data, name, quantity, distance}) {
+function Rows({date, name, quantity, distance}) {
     return ( 
         <tbody>
             <tr>
-            <td>{data}</td>
+            <td>{date}</td>
             <td>{name}</td>
             <td>{quantity}</td>
             <td>{distance}</td>
