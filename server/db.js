@@ -1,4 +1,6 @@
 const { isNumber } = require('lodash');
+const { attachPaginate } = require('knex-paginate');
+attachPaginate();
 
 var types = require('pg').types;
 // override parsing date column to Date()
@@ -27,15 +29,18 @@ async function getObjectsList(params) {
         .select('*')
         .from('objects')
         .orderBy(params.sort.columnName, params.sort.direction)
-        .offset((params.pagination.page) * params.pagination.itemsOnPage)
-        .limit(params.pagination.itemsOnPage)
+        // .offset((params.pagination.page) * params.pagination.itemsOnPage)
+        // .limit(params.pagination.itemsOnPage)
+
         .where((builder) => {
             if (params.filter.columnName && params.filter.operator && params.filter.filterValue) {
                 builder.where(params.filter.columnName, params.filter.operator, params.filter.filterValue);
             }
         })
-        data = await query;
+        data = await query.paginate({ perPage: params.pagination.perPage, currentPage: params.pagination.currentPage, isLengthAware: true });
         console.log(query.toString());
+        //console.log(data);
+        //console.log(await query.paginate({ perPage: 10, currentPage: 1 }))
     } catch (err) {
         console.log(err.toString());
         

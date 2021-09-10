@@ -4,15 +4,14 @@ import { setFilter, setSort, setPage, updateView } from './middlewares/Api';
 import Table from './components/Table';
 import {useEffect, useState} from 'react';
 import Error from './components/Error';
-import Pagination from './components/Pagination';
-
+import Paging from './components/Paging';
 
 
 function App() {
   const [filterResult, setFilterResult] = useState([]);
   const [pagination, setPagination] = useState({
-    page: 1,
-    itemsOnPage: 3
+    currentPage: 1,
+    perPage: 10,
   });
   const [errorText, setErrorText] = useState('');
   useEffect(() => {
@@ -25,7 +24,15 @@ function App() {
     .then((results) => {
       console.log(results)
       if (isNaN(results)){
-        setFilterResult(results);
+        setFilterResult(results.data);
+        setPagination({
+          currentPage: results.pagination.currentPage,
+          perPage: results.pagination.perPage,
+          total: results.pagination.total,
+          lastPage: results.pagination.lastPage,
+          from: results.pagination.from,
+          to: results.pagination.to          
+        })
         setErrorText('');
       } else {
         //alert(results)
@@ -37,6 +44,10 @@ function App() {
 
   function makeFilter(params) {
     setFilter(params);
+    setPage({
+      currentPage: 1,
+      perPage: pagination.perPage,
+    })
     getData();
   }
 
@@ -46,8 +57,9 @@ function App() {
   }
 
   function makePage(params) {
-    setPagination(params);
+    //console.log(params)
     setPage(params);
+    //setPagination(params);
     getData();
   }
 
@@ -63,10 +75,9 @@ function App() {
           data = {filterResult}
           setSort = {makeSort}
         />
-        <Pagination
+        <Paging
           setPage = {makePage}
           pagination = {pagination}
-          items = {filterResult}
         />
       </div>
       

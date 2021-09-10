@@ -41,10 +41,10 @@ const Table = function (props) {
         <table className="table table-bordered">
             <thead>
                 <tr>
-                <th scope="col" onClick={setSort} data-name="date">Дата</th>
-                <th scope="col" onClick={setSort} data-name="name">Название</th>
-                <th scope="col" onClick={setSort} data-name="quantity">Количество</th>
-                <th scope="col" onClick={setSort} data-name="distance">Расстояние</th>
+                <th scope="col"><a href="#" onClick={setSort} data-name="date">Дата</a></th>
+                <th scope="col"><a href="#" onClick={setSort} data-name="name">Название</a></th>
+                <th scope="col"><a href="#" onClick={setSort} data-name="quantity">Количество</a></th>
+                <th scope="col"><a href="#" onClick={setSort} data-name="distance">Расстояние</a></th>
                 </tr>
             </thead>
                 {props.data && props.data.map(item =>(

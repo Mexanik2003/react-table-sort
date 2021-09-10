@@ -9,9 +9,9 @@ const tableFilterParams = {
         direction: 'ASC'
     },
     pagination: {
-        page: 1,
-        itemsOnPage: 10
-    }
+        currentPage: 1,
+        perPage: 10
+}
 }
 
 
@@ -43,12 +43,12 @@ function setSort(params) {
 
 function setPage(params) {
     if (params) {
-        tableFilterParams.pagination.page = params.page
-        tableFilterParams.pagination.itemsOnPage = params.itemsOnPage
+        tableFilterParams.pagination.currentPage = params.currentPage
+        tableFilterParams.pagination.perPage = params.perPage
     } else {
         tableFilterParams.pagination = {
-            page: 1,
-            itemsOnPage: 10
+            currentPage: 1,
+            perPage: 10
         }
     };
 }

@@ -1,0 +1,14 @@
+.pagination {
+    display: flex;
+}
+
+.pagination-perpage {
+    display: flex;
+    height: 38px;
+    margin-right: 10px;
+}
+
+.pagination-perpage p {
+    margin: auto;
+    padding: 5px;
+}
