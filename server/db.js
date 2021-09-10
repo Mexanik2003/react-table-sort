@@ -27,7 +27,7 @@ async function getObjectsList(params) {
         .select('*')
         .from('objects')
         .orderBy(params.sort.columnName, params.sort.direction)
-        .offset((params.pagination.page-1) * params.pagination.itemsOnPage)
+        .offset((params.pagination.page) * params.pagination.itemsOnPage)
         .limit(params.pagination.itemsOnPage)
         .where((builder) => {
             if (params.filter.columnName && params.filter.operator && params.filter.filterValue) {
