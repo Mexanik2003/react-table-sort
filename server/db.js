@@ -20,71 +20,25 @@ async function getObjectsList(params) {
     // if (!searchParams.lessonsPerPage) {searchParams.lessonsPerPage = 5}
     // offset = (searchParams.page - 1) * searchParams.lessonsPerPage;
     console.log(params)
+    let query = null;
     let data = [];
     try {
-        data = await db.select('*').from('objects')
-    //         .from('lessons').offset(offset).limit(searchParams.lessonsPerPage).where((builder) => {
-    //             if (searchParams.date) {
-    //                 let { date } = searchParams;
-    //                 let dateArr = date.split(',');
-    //                 if (dateArr.length < 2) {
-    //                     builder.where('date',searchParams.date);
-    //                 } else {
-    //                     let maxDate, minDate;
-    //                     if (Date.parse(dateArr[1]) >= Date.parse(dateArr[0])) {
-    //                         maxDate=dateArr[1];
-    //                         minDate=dateArr[0];
-    //                     } else {
-    //                         maxDate=dateArr[0];
-    //                         minDate=dateArr[1];
-    //                     }
-    //                     builder.where('date', '>=', minDate);
-    //                     builder.where('date', '<=', maxDate);
-    //                 }
-    //             }
-    //         if (searchParams.status) builder.andWhere('status',searchParams.status);
-    //         if (searchParams.teacherIds)  {
-    //             builder.whereIn('id', function() {
-    //                 const teachersIdsArr = searchParams.teacherIds.toString().split(",");
-    //                 if (teachersIdsArr) {
-    //                     this.select('lesson_id').from('lesson_teachers').whereIn('teacher_id',teachersIdsArr);
-    //                 } else {
-    //                     this.select('lesson_id').from('lesson_teachers').where('teacher_id',searchParams.teacherIds);
-    //                 }
-    //             });
-    //         }
-    //         if (searchParams.studentsCount) {
-    //             let { studentsCount } = searchParams;
-    //             if (Number(studentsCount)) {
-    //                 builder.whereIn('id', function() {
-    //                     this.select('lesson_id').from('lesson_students').groupBy('lesson_id')
-    //                         .havingRaw('COUNT (student_id) = ' + studentsCount);
-    //                 });
-    //             } else {
-    //                 const studentsCountArr = studentsCount.split(',');
-    //                 builder.whereIn('id', function() {
-    //                     this.select('lesson_id').from('lesson_students').groupBy('lesson_id')
-    //                         .havingRaw('COUNT (student_id) between ' + Math.min.apply(null, studentsCountArr) + ' and ' + Math.max.apply(null, studentsCountArr));
-    //                 });
-    //             }
-    //         }
-    //     })//.toString();
-    //     //console.log(data);
-
-    //     for (key in data) {
-    //         let query = await db.select('st.*', 'ls.visit').from({st: 'students', ls: 'lesson_students'})
-    //             .whereRaw('st.id = ls.student_id')
-    //             .andWhere('ls.lesson_id', data[key].id);
-    //         data[key].students = query;
-    //         query = await db.select('t.*').from({t: 'teachers', lt: 'lesson_teachers'})
-    //             .whereRaw('t.id = lt.teacher_id')
-    //             .andWhere('lt.lesson_id', data[key].id);
-    //         data[key].teachers = query;
-    //         //console.log(key);
-    //     }
-    //    console.log(data)
-    //data = [{test: '123'}]
+        query = db
+        .select('*')
+        .from('objects')
+        .orderBy(params.sort.columnName, params.sort.direction)
+        .offset((params.pagination.page-1) * params.pagination.itemsOnPage)
+        .limit(params.pagination.itemsOnPage)
+        .where((builder) => {
+            if (params.filter.columnName && params.filter.operator && params.filter.filterValue) {
+                builder.where(params.filter.columnName, params.filter.operator, params.filter.filterValue);
+            }
+        })
+        data = await query;
+        console.log(query.toString());
     } catch (err) {
+        console.log(err.toString());
+        
         return returnErr (err);
     }
 

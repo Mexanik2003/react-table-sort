@@ -8,11 +8,14 @@ const Form = function (props) {
 
     function formSubmit(event) {
         event.preventDefault();
-        props.setFilter({
-                columnName: columnName,
-                operator: operator,
-                filterValue: filterValue
-        })
+        if (columnName && operator && filterValue) {
+            props.setFilter({
+                    columnName: columnName,
+                    operator: operator,
+                    filterValue: filterValue
+            })
+
+        }
     }
 
     function columnNameSet(event) {
@@ -30,21 +33,21 @@ const Form = function (props) {
     return (
         <form id="filterForm">
             <select id="columnName" onChange={columnNameSet}>
-                <option></option>
-                <option>one</option>
-                <option>two</option>
-                <option>three</option>
-                <option>four</option>
+                <option value="0"></option>
+                <option value="date">Дата</option>
+                <option value="name">Название</option>
+                <option value="quantity">Количество</option>
+                <option value="distance">Расстояние</option>
             </select>
             <select id="operator" onChange={operatorSet}>
-                <option></option>
-                <option>one2</option>
-                <option>two2</option>
-                <option>three2</option>
-                <option>four2</option>
+                <option value="0"></option>
+                <option value="=">равно</option>
+                <option value="~">содержит</option>
+                <option value=">">больше</option>
+                <option value="<">меньше</option>
             </select>
             <input id="filterValue" type="text" onChange={filterValueSet}/>
-            <button onClick={formSubmit}>{columnName}OK</button>
+            <button onClick={formSubmit}>OK</button>
             
         </form>
     )

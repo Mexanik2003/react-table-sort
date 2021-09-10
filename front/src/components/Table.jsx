@@ -1,29 +1,33 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 const Table = function (props) {
-    console.log(props)
+
+    function setSort(e) {
+        console.log(e.target.dataset.name)
+        props.setSort(e.target.dataset.name)
+    }
+
     return (
         <table>
             <thead>
                 <tr>
                     <th>
-                        Дата
+                        <a href="#" onClick={setSort} data-name="date">Дата</a>
                     </th>
                     <th>
-                        Название
+                        <a href="#" onClick={setSort} data-name="name">Название</a>
                     </th>
                     <th>
-                        Количество
+                        <a href="#" onClick={setSort} data-name="quantity">Количество</a>
                     </th>
                     <th>
-                        Расстояние
+                        <a href="#" onClick={setSort} data-name="distance">Расстояние</a>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                { props.data.map(item =>(
+                { props.data && props.data.map(item =>(
                 <tr key={item.id}>
-                    <td>{item.id}</td>
                     <td>{item.date}</td>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>

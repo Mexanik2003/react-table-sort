@@ -1,34 +1,67 @@
 import logo from './logo.svg';
 import './App.css';
 import Form from './components/Form';
-import { setFilter } from './middlewares/Api';
+import { setFilter, setSort, setPage, updateView } from './middlewares/Api';
 import Table from './components/Table';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import Error from './components/Error';
 
 
 
 function App() {
-  let [filterResult, setFilterResult] = useState([]);;
+  const [filterResult, setFilterResult] = useState([]);
+  const [pagination, setPagination] = useState(null);
+  const [errorText, setErrorText] = useState('');
+  useEffect(() => {
+    getData();
+  },[]);
 
-  function getData(params) {
-    let result = setFilter(params)
-      .then((results) => {
-        console.log(results)
+  function getData() {
+    updateView()
+    .then((results) => {
+      console.log(results)
+      if (isNaN(results)){
         setFilterResult(results);
-      })
+        setErrorText('');
+      } else {
+        //alert(results)
+        setErrorText(`Ошибка в комбинации параметров (error ${results})`);
+        setFilterResult([]);
+      }
+    })
+  }
+
+  function makeFilter(params) {
+    setFilter(params);
+    getData();
+  }
+
+  function makeSort(params) {
+    setSort(params);
+    getData();
+  }
+
+  function makePage(params) {
+    setPage(params);
+    getData();
   }
 
   return (
-    <div>
-      <Form 
-        setFilter = {getData}
-      />
-      <Table 
-        data = {filterResult}
-      />
-    </div>
-    
-  );
-}
+      <div>
+        <Form 
+          setFilter = {makeFilter}
+          />
+        <Error 
+          text = {errorText}
+        />
+        <Table 
+          data = {filterResult}
+          setSort = {makeSort}
+          setPage = {makePage}
+        />
+      </div>
+      
+    );
+  }
 
 export default App;
