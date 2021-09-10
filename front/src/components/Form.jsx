@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './Form.css';
 
 const Form = function (props) {
     const [columnName, setColumnName] = useState('');
@@ -31,23 +32,23 @@ const Form = function (props) {
     }
 
     return (
-        <form id="filterForm">
-            <select id="columnName" onChange={columnNameSet}>
+        <form id="filterForm" className="form">
+            <select id="columnName" className="form__column" onChange={columnNameSet}>
                 <option value="0"></option>
                 <option value="date">Дата</option>
                 <option value="name">Название</option>
                 <option value="quantity">Количество</option>
                 <option value="distance">Расстояние</option>
             </select>
-            <select id="operator" onChange={operatorSet}>
+            <select id="operator" className="form__column" onChange={operatorSet}>
                 <option value="0"></option>
                 <option value="=">равно</option>
                 <option value="~">содержит</option>
                 <option value=">">больше</option>
                 <option value="<">меньше</option>
             </select>
-            <input id="filterValue" type="text" onChange={filterValueSet}/>
-            <button onClick={formSubmit}>OK</button>
+            <input id="filterValue" className="form__column" type="text" onChange={filterValueSet}/>
+            <button onClick={formSubmit}>Поиск</button>
             
         </form>
     )

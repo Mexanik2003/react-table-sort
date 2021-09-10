@@ -1,4 +1,5 @@
 import React from 'react';
+import Rows from './Rows';
 
 const Table = function (props) {
 
@@ -8,7 +9,7 @@ const Table = function (props) {
     }
 
     return (
-        <table>
+        /*<table>
             <thead>
                 <tr>
                     <th>
@@ -35,8 +36,29 @@ const Table = function (props) {
                 </tr>
             ))}
             </tbody>
+        </table>*/
+
+        <table className="table table-bordered">
+            <thead>
+                <tr>
+                <th scope="col" onClick={setSort} data-name="date">Дата</th>
+                <th scope="col" onClick={setSort} data-name="name">Название</th>
+                <th scope="col" onClick={setSort} data-name="quantity">Количество</th>
+                <th scope="col" onClick={setSort} data-name="distance">Расстояние</th>
+                </tr>
+            </thead>
+                {props.data && props.data.map(item =>(
+                    < Rows 
+                        key={item.id}
+                        data={item.date} 
+                        name={item.name} 
+                        quantity={item.quantity}
+                        distance={item.distance}
+                    />
+                ))}
         </table>
-    )
+
+            )
     
     
 }

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Form from './components/Form';
 import { setFilter, setSort, setPage, updateView } from './middlewares/Api';
@@ -53,7 +52,7 @@ function App() {
   }
 
   return (
-      <div>
+      <div className="app">
         <Form 
           setFilter = {makeFilter}
         />
