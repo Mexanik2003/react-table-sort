@@ -1,30 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import './Form.css';
+import MySelect from './MySelect';
 
 const Form = function (props) {
     const [columnName, setColumnName] = useState('');
-    const [operator, setOperator] = useState('');
+    //const [operator, setOperator] = useState('');
+    let operatorSelectRef = useRef();
     const [filterValue, setValue] = useState('');
 
 
     function formSubmit(event) {
         event.preventDefault();
-        if (columnName && operator && filterValue) {
+        if (columnName && operatorSelectRef && filterValue) {
             props.setFilter({
                     columnName: columnName,
-                    operator: operator,
+                    operator: operatorSelectRef.current.value,
                     filterValue: filterValue
             })
 
         }
-    }
-
-    function columnNameSet(event) {
-        setColumnName(event.target.value);
-    }
-
-    function operatorSet(event) {
-        setOperator(event.target.value);
     }
 
     function filterValueSet(event) {
@@ -33,20 +27,30 @@ const Form = function (props) {
 
     return (
         <form id="filterForm" className="form">
-            <select id="columnName" className="form__column" onChange={columnNameSet}>
-                <option value="0"></option>
-                <option value="date">Дата</option>
-                <option value="name">Название</option>
-                <option value="quantity">Количество</option>
-                <option value="distance">Расстояние</option>
-            </select>
-            <select id="operator" className="form__column" onChange={operatorSet}>
-                <option value="0"></option>
-                <option value="=">равно</option>
-                <option value="~">содержит</option>
-                <option value=">">больше</option>
-                <option value="<">меньше</option>
-            </select>
+            {/* Управляемый компонент */}
+            <MySelect
+                onChange={e => setColumnName(e.target.value)}
+                items={[
+                    {value: "0", text: "Столбец", disabled: true},
+                    {value: "date", text: "Дата", disabled: false},
+                    {value: "name", text: "Название", disabled: false},
+                    {value: "quantity", text: "Количество", disabled: false},
+                    {value: "distance", text: "Расстояние", disabled: false}
+
+                ]}
+            />
+            {/* НЕуправляемый компонент */}
+            <MySelect
+                items={[
+                    {value: "0", text: "Оператор", disabled: true},
+                    {value: "=", text: "равно", disabled: false},
+                    {value: "~", text: "содержит", disabled: false},
+                    {value: ">", text: "больше", disabled: false},
+                    {value: "<", text: "меньше", disabled: false}
+
+                ]}
+                ref = {operatorSelectRef}
+            />
             <input id="filterValue" className="form__column" type="text" onChange={filterValueSet}/>
             <button onClick={formSubmit}>Поиск</button>
             
