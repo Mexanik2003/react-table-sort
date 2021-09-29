@@ -1,3 +1,4 @@
+import React from 'react';
 function Rows({date, name, quantity, distance}) {
     return ( 
         <tbody>
