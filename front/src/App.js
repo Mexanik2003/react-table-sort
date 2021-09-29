@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import Form from './components/Form';
 import { setFilter, setSort, setPage, updateView } from './middlewares/Api';
 import Table from './components/Table';
